@@ -21,6 +21,16 @@ export const companies: Company[] = [
     rating: 4.2,
     reviewCount: 89,
   },
+  {
+    id: 'c3',
+    name: 'TechStart Inc',
+    location: 'Surabaya, Indonesia',
+    website: 'https://techstart.example',
+    description: 'Innovative startup building the future of digital experiences',
+    logo: 'https://via.placeholder.com/64x64?text=TS',
+    rating: 4.7,
+    reviewCount: 156,
+  },
 ]
 
 export const jobs: Job[] = [

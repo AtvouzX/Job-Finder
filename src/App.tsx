@@ -13,7 +13,7 @@ import NotFound from '@/pages/NotFound'
 
 function App() {
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col bg-background">
       <Header />
       <div className="flex-1">
         <SavedProvider>

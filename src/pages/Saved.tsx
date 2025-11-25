@@ -29,7 +29,7 @@ export default function Saved() {
               job={job}
               isSaved={true}
               onToggleSave={toggleSaved}
-              showFilledHeart={true}
+              showFilledBookmark={true}
             />
           ))}
         </div>

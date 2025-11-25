@@ -2,17 +2,17 @@ import { Link } from 'react-router-dom'
 import { companies } from '@/data/sampleJobs'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
-import { Heart, MapPin, Clock, DollarSign, Briefcase } from 'lucide-react'
+import { Bookmark, MapPin, Clock, DollarSign, Briefcase } from 'lucide-react'
 import type { Job } from '@/types'
 
 interface JobCardProps {
   job: Job
   isSaved: boolean
   onToggleSave: (jobId: string) => void
-  showFilledHeart?: boolean
+  showFilledBookmark?: boolean
 }
 
-export function JobCard({ job, isSaved, onToggleSave, showFilledHeart = false }: JobCardProps) {
+export function JobCard({ job, isSaved, onToggleSave, showFilledBookmark = false }: JobCardProps) {
   const getCompanyLogo = (companyId: string) => {
     const company = companies.find(c => c.id === companyId)
     return company?.logo || 'https://via.placeholder.com/64x64?text=?'
@@ -39,11 +39,11 @@ export function JobCard({ job, isSaved, onToggleSave, showFilledHeart = false }:
             onClick={() => onToggleSave(job.id)}
             className="shrink-0"
           >
-            <Heart
+            <Bookmark
               className={`h-5 w-5 ${
-                showFilledHeart || isSaved
-                  ? 'fill-red-500 text-red-500'
-                  : 'text-muted-foreground hover:text-red-500'
+                showFilledBookmark || isSaved
+                  ? 'fill-destructive text-destructive'
+                  : 'text-muted-foreground hover:text-destructive'
               }`}
             />
           </Button>

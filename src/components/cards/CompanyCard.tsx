@@ -20,10 +20,10 @@ export function CompanyCard({ company }: CompanyCardProps) {
         key={i}
         className={`h-4 w-4 ${
           i < Math.floor(rating)
-            ? 'fill-yellow-400 text-yellow-400'
+            ? 'fill-accent text-accent'
             : i < rating
-            ? 'fill-yellow-400/50 text-yellow-400'
-            : 'text-gray-300'
+            ? 'fill-accent/50 text-accent'
+            : 'text-muted-foreground'
         }`}
       />
     ))
