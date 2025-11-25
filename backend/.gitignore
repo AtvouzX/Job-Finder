@@ -16,6 +16,8 @@ pnpm-debug.log*
 logs
 *.log
 
+JobFinderAPI.postman_collection.json
+
 # Runtime data
 pids
 *.pid

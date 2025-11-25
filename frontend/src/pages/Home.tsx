@@ -102,7 +102,7 @@ export default function Home() {
 
           <div className="text-center mt-12">
             <Link to="/perusahaan">
-              <Button variant="outline" size="lg" className="px-8 py-4 text-lg font-semibold border-2 hover:bg-muted transition-all duration-200">
+              <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-200">
                 View All Companies
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>

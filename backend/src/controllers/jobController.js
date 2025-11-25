@@ -34,6 +34,35 @@ const jobController = {
     }
   },
 
+  async createJobsBulk(req, res) {
+    try {
+      const jobArray = req.body
+      if (!Array.isArray(jobArray)) {
+        return res.status(400).json({ error: 'Request body must be an array of jobs' })
+      }
+
+      // Validate and generate slugs if missing
+      const prepared = jobArray.map((j) => {
+        const jobData = { ...j }
+        if (!jobData.title) {
+          throw new Error('Each job must include a title')
+        }
+        if (!jobData.slug) {
+          jobData.slug = jobData.title
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-|-$/g, '')
+        }
+        return jobData
+      })
+
+      const newJobs = await Job.createBulk(prepared)
+      res.status(201).json(newJobs)
+    } catch (error) {
+      res.status(500).json({ error: error.message })
+    }
+  },
+
   async updateJob(req, res) {
     try {
       const { id } = req.params;

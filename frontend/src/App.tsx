@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import BottomNavigation from '@/components/layout/BottomNavigation'
 import { SavedProvider } from '@/contexts/SavedContext'
 import Home from '@/pages/Home'
 import Jobs from '@/pages/jobs/Jobs'
@@ -15,7 +16,7 @@ function App() {
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Header />
-      <div className="flex-1">
+      <div className="flex-1 pb-16 md:pb-0">
         <SavedProvider>
           <Routes>
           <Route path="/" element={<Home />} />
@@ -29,6 +30,7 @@ function App() {
           </Routes>
         </SavedProvider>
       </div>
+      <BottomNavigation />
       <Footer />
     </div>
   )

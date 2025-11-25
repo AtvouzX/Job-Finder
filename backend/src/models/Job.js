@@ -31,6 +31,21 @@ class Job {
     return data;
   }
 
+  static async createBulk(jobArray) {
+    if (!Array.isArray(jobArray)) {
+      throw new Error('createBulk expects an array of job objects')
+    }
+
+    // Insert multiple rows at once and return inserted rows
+    const { data, error } = await supabase
+      .from('jobs')
+      .insert(jobArray)
+      .select();
+
+    if (error) throw error;
+    return data;
+  }
+
   static async update(id, updates) {
     const { data, error } = await supabase
       .from('jobs')
