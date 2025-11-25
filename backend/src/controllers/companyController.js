@@ -22,7 +22,11 @@ const companyController = {
 
   async createCompany(req, res) {
     try {
-      const companyData = req.body;
+      let companyData = req.body;
+      // Generate slug from name if not provided
+      if (!companyData.slug && companyData.name) {
+        companyData.slug = companyData.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      }
       const newCompany = await Company.create(companyData);
       res.status(201).json(newCompany);
     } catch (error) {

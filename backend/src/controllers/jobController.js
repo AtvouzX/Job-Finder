@@ -22,7 +22,11 @@ const jobController = {
 
   async createJob(req, res) {
     try {
-      const jobData = req.body;
+      let jobData = req.body;
+      // Generate slug from title if not provided
+      if (!jobData.slug && jobData.title) {
+        jobData.slug = jobData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      }
       const newJob = await Job.create(jobData);
       res.status(201).json(newJob);
     } catch (error) {

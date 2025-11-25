@@ -1,25 +1,33 @@
 export interface Company {
   id: string
   name: string
+  slug?: string
   location?: string
   website?: string
   description?: string
-  logo?: string
   rating?: number
-  reviewCount?: number
+  review_count?: number
+  created_at?: string
 }
 
 export interface Job {
   id: string
+  company_id: string
   title: string
-  companyId: string
-  companyName: string
+  slug?: string
   location?: string
-  isRemote?: boolean
-  salary?: string
+  is_remote?: boolean
+  salary_min?: number
+  salary_max?: number
+  salary_currency?: string
+  employment_type?: string
   description?: string
-  postedDate?: string
-  benefits?: string[]
+  benefits?: any[]
+  tags?: string[]
+  posted_at?: string
+  is_published?: boolean
+  created_at?: string
+  updated_at?: string
 }
 
 export interface UserProfile {

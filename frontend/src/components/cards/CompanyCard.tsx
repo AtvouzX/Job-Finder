@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import { jobs } from '@/data/sampleJobs'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Star, MessageSquare, Briefcase, MapPin } from 'lucide-react'
@@ -10,8 +9,13 @@ interface CompanyCardProps {
 }
 
 export function CompanyCard({ company }: CompanyCardProps) {
-  const getJobCount = (companyId: string) => {
-    return jobs.filter(job => job.companyId === companyId).length
+  const getLogoSrc = (company: Company) => {
+    if (company.website) {
+      const domain = new URL(company.website).hostname
+      const apiKey = import.meta.env.VITE_LOGO_DEV_API_KEY
+      return `https://img.logo.dev/${domain}?token=${apiKey}`
+    }
+    return 'https://via.placeholder.com/64x64?text=No+Logo'
   }
 
   const renderStars = (rating: number) => {
@@ -34,7 +38,7 @@ export function CompanyCard({ company }: CompanyCardProps) {
       <CardHeader className="pb-3">
         <div className="flex items-center gap-4">
           <img
-            src={company.logo}
+            src={getLogoSrc(company)}
             alt={`${company.name} logo`}
             className="w-16 h-16 rounded-lg object-cover"
           />
@@ -57,12 +61,12 @@ export function CompanyCard({ company }: CompanyCardProps) {
 
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <MessageSquare className="h-4 w-4" />
-          <span>{company.reviewCount} reviews</span>
+          <span>{company.review_count} reviews</span>
         </div>
 
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <Briefcase className="h-4 w-4" />
-          <span>{getJobCount(company.id)} jobs available</span>
+          <span>Jobs available</span>
         </div>
 
         <div className="pt-2">
