@@ -53,6 +53,24 @@ const companyController = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
+  },
+
+  async createCompanies(req, res) {
+    try {
+      let companiesData = req.body;
+      if (Array.isArray(companiesData)) {
+        companiesData = companiesData.map(company => {
+          if (!company.slug && company.name) {
+            company.slug = company.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+          }
+          return company;
+        });
+      }
+      const newCompanies = await Company.createBulk(companiesData);
+      res.status(201).json(newCompanies);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
   }
 };
 

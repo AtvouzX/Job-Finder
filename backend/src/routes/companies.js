@@ -5,6 +5,7 @@ const companyController = require('../controllers/companyController');
 router.get('/', companyController.getAllCompanies);
 router.get('/:id', companyController.getCompanyById);
 router.post('/', companyController.createCompany);
+router.post('/bulk', companyController.createCompanies);
 router.put('/:id', companyController.updateCompany);
 router.delete('/:id', companyController.deleteCompany);
 

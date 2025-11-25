@@ -19,18 +19,25 @@ export function CompanyCard({ company }: CompanyCardProps) {
   }
 
   const renderStars = (rating: number) => {
-    return Array.from({ length: 5 }, (_, i) => (
-      <Star
-        key={i}
-        className={`h-4 w-4 ${
-          i < Math.floor(rating)
-            ? 'fill-accent text-accent'
-            : i < rating
-            ? 'fill-accent/50 text-accent'
-            : 'text-muted-foreground'
-        }`}
-      />
-    ))
+    return Array.from({ length: 5 }, (_, i) => {
+      const isFull = i < Math.floor(rating);
+      const isPartial = i === Math.floor(rating) && rating % 1 !== 0;
+      const partialWidth = (rating % 1) * 100;
+
+      return (
+        <div key={i} className="relative">
+          <Star className="h-4 w-4 text-accent" />
+          {isFull && (
+            <Star className="absolute top-0 left-0 h-4 w-4 fill-primary text-primary" />
+          )}
+          {isPartial && (
+            <div className="absolute top-0 left-0 overflow-hidden" style={{ width: `${partialWidth}%` }}>
+              <Star className="h-4 w-4 fill-primary text-primary" />
+            </div>
+          )}
+        </div>
+      );
+    });
   }
 
   return (

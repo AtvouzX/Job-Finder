@@ -48,6 +48,15 @@ class Company {
     if (error) throw error;
     return true;
   }
+
+  static async createBulk(companiesData) {
+    const { data, error } = await supabase
+      .from('companies')
+      .insert(companiesData)
+      .select();
+    if (error) throw error;
+    return data;
+  }
 }
 
 module.exports = Company;
