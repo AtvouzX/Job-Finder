@@ -16,7 +16,7 @@ export interface Job {
   id: string;
   company_id: string;
   title: string;
-  slug: string;
+  slug?: string;
   is_remote?: boolean;
   location?: string;
   salary_min?: number;
@@ -32,6 +32,10 @@ export interface Job {
   is_published?: boolean;
   created_at?: string;
   updated_at?: string;
+  companies?: {
+    name: string;
+    website?: string;
+  };
 }
 
 export const api = {

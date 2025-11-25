@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom'
-import { companies } from '@/data/sampleJobs'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Bookmark, MapPin, Clock, DollarSign, Briefcase } from 'lucide-react'
 import type { Job } from '@/types'
+import { formatRelativeDate } from '@/lib/utils'
 
 interface JobCardProps {
   job: Job
@@ -13,9 +13,20 @@ interface JobCardProps {
 }
 
 export function JobCard({ job, isSaved, onToggleSave, showFilledBookmark = false }: JobCardProps) {
-  const getCompanyLogo = (companyId: string) => {
-    const company = companies.find(c => c.id === companyId)
-    return company?.logo || 'https://via.placeholder.com/64x64?text=?'
+  const getCompanyLogo = (job: Job) => {
+    if (job.companies?.website) {
+      const domain = new URL(job.companies.website).hostname
+      const apiKey = import.meta.env.VITE_LOGO_DEV_API_KEY
+      return `https://img.logo.dev/${domain}?token=${apiKey}`
+    }
+    return 'https://via.placeholder.com/64x64?text=No+Logo'
+  }
+
+  const formatSalary = (job: Job) => {
+    if (job.salary_min && job.salary_max) {
+      return `${job.salary_currency || 'IDR'} ${job.salary_min.toLocaleString()} - ${job.salary_max.toLocaleString()}`
+    }
+    return 'Salary not specified'
   }
 
   return (
@@ -24,13 +35,13 @@ export function JobCard({ job, isSaved, onToggleSave, showFilledBookmark = false
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
             <img
-              src={getCompanyLogo(job.companyId)}
-              alt={`${job.companyName} logo`}
+              src={getCompanyLogo(job)}
+              alt={`${job.companies?.name} logo`}
               className="w-12 h-12 rounded-lg object-cover"
             />
             <div>
               <h2 className="font-semibold text-lg leading-tight">{job.title}</h2>
-              <p className="text-sm text-muted-foreground">{job.companyName}</p>
+              <p className="text-sm text-muted-foreground">{job.companies?.name}</p>
             </div>
           </div>
           <Button
@@ -52,12 +63,12 @@ export function JobCard({ job, isSaved, onToggleSave, showFilledBookmark = false
       <CardContent className="space-y-3">
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <MapPin className="h-4 w-4" />
-          <span>{job.location}{job.isRemote && ' (Remote)'}</span>
+          <span>{job.location}{job.is_remote && ' (Remote)'}</span>
         </div>
 
         <div className="flex items-center gap-2 text-sm font-medium">
           <DollarSign className="h-4 w-4" />
-          <span>{job.salary}</span>
+          <span>{formatSalary(job)}</span>
         </div>
 
         <p className="text-sm text-muted-foreground line-clamp-2">
@@ -86,7 +97,7 @@ export function JobCard({ job, isSaved, onToggleSave, showFilledBookmark = false
         <div className="flex items-center justify-between pt-2">
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
             <Clock className="h-3 w-3" />
-            <span>Posted {job.postedDate}</span>
+            <span>Posted {formatRelativeDate(job.posted_at)}</span>
           </div>
           <Link to={`/lowongan/${job.id}`}>
             <Button size="sm">View Details</Button>

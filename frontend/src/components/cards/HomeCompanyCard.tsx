@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import { jobs } from '@/data/sampleJobs'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Briefcase } from 'lucide-react'
 import type { Company } from '@/types'
@@ -9,8 +8,13 @@ interface HomeCompanyCardProps {
 }
 
 export function HomeCompanyCard({ company }: HomeCompanyCardProps) {
-  const getJobCount = (companyId: string) => {
-    return jobs.filter(job => job.companyId === companyId).length
+  const getLogoSrc = (company: Company) => {
+    if (company.website) {
+      const domain = new URL(company.website).hostname
+      const apiKey = import.meta.env.VITE_LOGO_DEV_API_KEY
+      return `https://img.logo.dev/${domain}?token=${apiKey}`
+    }
+    return 'https://via.placeholder.com/64x64?text=No+Logo'
   }
 
   return (
@@ -19,7 +23,7 @@ export function HomeCompanyCard({ company }: HomeCompanyCardProps) {
         <CardHeader className="pb-3">
           <div className="flex flex-col  items-center gap-4">
             <img
-              src={company.logo}
+              src={getLogoSrc(company)}
               alt={`${company.name} logo`}
               className="w-12 h-12 rounded-lg object-cover"
             />
@@ -31,7 +35,7 @@ export function HomeCompanyCard({ company }: HomeCompanyCardProps) {
         <CardContent>
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Briefcase className="h-4 w-4" />
-            <span>{getJobCount(company.id)} jobs available</span>
+            <span>Jobs available</span>
           </div>
         </CardContent>
       </Card>

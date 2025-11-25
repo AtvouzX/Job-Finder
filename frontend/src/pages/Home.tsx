@@ -1,5 +1,6 @@
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { jobs, companies } from '@/data/sampleJobs'
+import { api, type Job, type Company } from '@/lib/api'
 import { Hero } from '@/components/Hero'
 import { JobCard } from '@/components/cards'
 import { HomeCompanyCard } from '@/components/cards'
@@ -7,6 +8,38 @@ import { Button } from '@/components/ui/button'
 import { ArrowRight } from 'lucide-react'
 
 export default function Home() {
+  const [jobs, setJobs] = useState<Job[]>([])
+  const [companies, setCompanies] = useState<Company[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [jobsData, companiesData] = await Promise.all([
+          api.getJobs(),
+          api.getCompanies()
+        ])
+        setJobs(jobsData)
+        setCompanies(companiesData)
+      } catch (error) {
+        console.error('Failed to fetch data:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [])
+
+  if (loading) {
+    return (
+      <main>
+        <Hero />
+        <div className="py-16 text-center">Loading...</div>
+      </main>
+    )
+  }
+
   return (
     <main>
       {/* Hero Section */}

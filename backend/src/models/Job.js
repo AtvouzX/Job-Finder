@@ -4,7 +4,9 @@ class Job {
   static async findAll() {
     const { data, error } = await supabase
       .from('jobs')
-      .select('*');
+      .select('*, companies(name, website)')
+      .eq('is_published', true)
+      .order('posted_at', { ascending: false });
     if (error) throw error;
     return data;
   }
@@ -12,7 +14,7 @@ class Job {
   static async findById(id) {
     const { data, error } = await supabase
       .from('jobs')
-      .select('*')
+      .select('*, companies(name, website)')
       .eq('id', id)
       .single();
     if (error) throw error;
