@@ -1,5 +1,10 @@
-import { Link } from 'react-router-dom'
-import NavLink from '@/components/ui/NavLink'
+import { Link, NavLink } from 'react-router-dom'
+import {
+  NavigationMenu,
+  NavigationMenuList,
+  NavigationMenuItem,
+  NavigationMenuLink,
+} from '@/components/ui/navigation-menu'
 
 export default function Header() {
   return (
@@ -8,13 +13,42 @@ export default function Header() {
         <Link to="/" className="font-bold text-lg">
           JobFinder
         </Link>
-        <nav className="flex gap-2 items-center">
-          <NavLink to="/">Home</NavLink>
-          <NavLink to="/lowongan">Lowongan Kerja</NavLink>
-          <NavLink to="/perusahaan">Perusahaan</NavLink>
-          <NavLink to="/saved">Saved</NavLink>
-          <NavLink to="/profile">Profile</NavLink>
-        </nav>
+
+        <div className="hidden md:flex items-center gap-4">
+          <NavigationMenu>
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <NavigationMenuLink asChild>
+                  <NavLink to="/">Home</NavLink>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <NavigationMenuLink asChild>
+                  <NavLink to="/lowongan">Lowongan Kerja</NavLink>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <NavigationMenuLink asChild>
+                  <NavLink to="/perusahaan">Perusahaan</NavLink>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <NavigationMenuLink asChild>
+                  <NavLink to="/saved">Saved</NavLink>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <NavigationMenuLink asChild>
+                  <NavLink to="/profile">Profile</NavLink>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+        </div>
       </div>
     </header>
   )

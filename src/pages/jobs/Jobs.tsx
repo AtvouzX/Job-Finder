@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom'
 import { jobs } from '@/data/sampleJobs'
 import { useSavedContext } from '@/contexts/SavedContext'
+import { Button } from '@/components/ui/button'
 
 export default function Jobs() {
-  const { saved, isSaved, toggleSaved } = useSavedContext()
+  const { isSaved, toggleSaved } = useSavedContext()
 
   return (
     <main className="max-w-6xl mx-auto p-4">
@@ -17,12 +18,12 @@ export default function Jobs() {
             </div>
             <div className="flex flex-col items-end gap-2">
               <Link to={`/lowongan/${job.id}`} className="text-blue-600">Detail</Link>
-              <button
-                className={`px-3 py-1 rounded border ${isSaved(job.id) ? 'bg-blue-50 border-blue-500 text-blue-700' : 'bg-white'}`}
+              <Button
+                className={`px-3 py-1 rounded border ${isSaved(job.id)}`}
                 onClick={() => toggleSaved(job.id)}
               >
                 {isSaved(job.id) ? 'Saved' : 'Save'}
-              </button>
+              </Button>
             </div>
           </div>
         ))}
