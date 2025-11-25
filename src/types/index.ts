@@ -5,6 +5,8 @@ export interface Company {
   website?: string
   description?: string
   logo?: string
+  rating?: number
+  reviewCount?: number
 }
 
 export interface Job {

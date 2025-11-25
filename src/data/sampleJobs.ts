@@ -8,6 +8,8 @@ export const companies: Company[] = [
     website: 'https://acme.example',
     description: 'A technology company specialized in building awesome software',
     logo: 'https://via.placeholder.com/64x64?text=AC',
+    rating: 4.5,
+    reviewCount: 128,
   },
   {
     id: 'c2',
@@ -16,6 +18,8 @@ export const companies: Company[] = [
     website: 'https://nusantara.example',
     description: 'Cloud and infra focused company',
     logo: 'https://via.placeholder.com/64x64?text=NS',
+    rating: 4.2,
+    reviewCount: 89,
   },
 ]
 
