@@ -4,6 +4,7 @@ export interface Company {
   location?: string
   website?: string
   description?: string
+  logo?: string
 }
 
 export interface Job {
@@ -15,6 +16,8 @@ export interface Job {
   isRemote?: boolean
   salary?: string
   description?: string
+  postedDate?: string
+  benefits?: string[]
 }
 
 export interface UserProfile {
