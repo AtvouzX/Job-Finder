@@ -18,7 +18,7 @@ export function HomeCompanyCard({ company }: HomeCompanyCardProps) {
   }
 
   return (
-    <Link to={`/perusahaan/${company.id}`}>
+    <Link to={`/companies/${company.id}`}>
       <Card className="hover:shadow-lg transition-shadow duration-200 cursor-pointer">
         <CardHeader className="pb-3">
           <div className="flex flex-col  items-center gap-4">

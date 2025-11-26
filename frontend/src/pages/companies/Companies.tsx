@@ -10,7 +10,7 @@ export default function Companies() {
   if (isLoading) {
     return (
       <main className="max-w-6xl mx-auto p-4">
-        <h1 className="text-2xl font-bold mb-6">Perusahaan</h1>
+        <h1 className="text-2xl font-bold mb-6">Companies</h1>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {Array.from({ length: 6 }).map((_, i) => (
             <div key={i} className="space-y-3">
@@ -27,7 +27,7 @@ export default function Companies() {
   if (error) {
     return (
       <main className="max-w-6xl mx-auto p-4">
-        <h1 className="text-2xl font-bold mb-6">Perusahaan</h1>
+        <h1 className="text-2xl font-bold mb-6">Companies</h1>
         <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />
           <AlertDescription>
@@ -40,7 +40,7 @@ export default function Companies() {
 
   return (
     <main className="max-w-6xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-6">Perusahaan</h1>
+      <h1 className="text-2xl font-bold mb-6">Companies</h1>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {companies.map((company) => (
           <CompanyCard key={company.id} company={company} />

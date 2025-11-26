@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Bookmark, MapPin, Clock, DollarSign, Briefcase } from 'lucide-react'
-import type { Job } from '@/types'
+import type { Job } from '@/lib/api'
 import { formatRelativeDate } from '@/lib/utils'
 
 interface JobCardProps {
@@ -99,7 +99,7 @@ export function JobCard({ job, isSaved, onToggleSave, showFilledBookmark = false
             <Clock className="h-3 w-3" />
             <span>Posted {formatRelativeDate(job.posted_at)}</span>
           </div>
-          <Link to={`/lowongan/${job.id}`}>
+          <Link to={`/jobs/${job.id}`}>
             <Button size="sm">View Details</Button>
           </Link>
         </div>

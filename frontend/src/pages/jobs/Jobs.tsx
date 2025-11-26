@@ -12,7 +12,7 @@ export default function Jobs() {
   if (isLoading) {
     return (
       <main className="max-w-6xl mx-auto p-4">
-        <h1 className="text-2xl font-bold mb-6">Lowongan Kerja</h1>
+        <h1 className="text-2xl font-bold mb-6">Jobs</h1>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {Array.from({ length: 6 }).map((_, i) => (
             <div key={i} className="space-y-3">
@@ -29,7 +29,7 @@ export default function Jobs() {
   if (error) {
     return (
       <main className="max-w-6xl mx-auto p-4">
-        <h1 className="text-2xl font-bold mb-6">Lowongan Kerja</h1>
+        <h1 className="text-2xl font-bold mb-6">Jobs</h1>
         <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />
           <AlertDescription>
@@ -42,7 +42,7 @@ export default function Jobs() {
 
   return (
     <main className="max-w-6xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-6">Lowongan Kerja</h1>
+      <h1 className="text-2xl font-bold mb-6">Jobs</h1>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {jobs.map((job) => (
           <JobCard

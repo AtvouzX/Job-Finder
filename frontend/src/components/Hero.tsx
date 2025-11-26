@@ -15,7 +15,7 @@ export function Hero() {
         const params = new URLSearchParams()
         if (searchQuery) params.set('q', searchQuery)
         if (locationQuery) params.set('location', locationQuery)
-        navigate(`/lowongan?${params.toString()}`)
+        navigate(`/jobs?${params.toString()}`)
     }
 
     return (

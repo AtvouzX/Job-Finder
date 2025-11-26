@@ -25,13 +25,13 @@ export default function Header() {
 
               <NavigationMenuItem>
                 <NavigationMenuLink asChild>
-                  <NavLink to="/lowongan">Lowongan Kerja</NavLink>
+                  <NavLink to="/jobs">Jobs</NavLink>
                 </NavigationMenuLink>
               </NavigationMenuItem>
 
               <NavigationMenuItem>
                 <NavigationMenuLink asChild>
-                  <NavLink to="/perusahaan">Perusahaan</NavLink>
+                  <NavLink to="/companies">Companies</NavLink>
                 </NavigationMenuLink>
               </NavigationMenuItem>
 

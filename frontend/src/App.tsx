@@ -41,10 +41,10 @@ function App() {
           <Suspense fallback={<PageSkeleton />}>
             <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/lowongan" element={<Jobs />} />
-            <Route path="/lowongan/:id" element={<JobDetail />} />
-            <Route path="/perusahaan" element={<Companies />} />
-            <Route path="/perusahaan/:id" element={<CompanyDetail />} />
+            <Route path="/jobs" element={<Jobs />} />
+            <Route path="/jobs/:id" element={<JobDetail />} />
+            <Route path="/companies" element={<Companies />} />
+            <Route path="/companies/:id" element={<CompanyDetail />} />
             <Route path="/saved" element={<Saved />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="*" element={<NotFound />} />

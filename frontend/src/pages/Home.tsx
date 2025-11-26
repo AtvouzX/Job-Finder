@@ -69,7 +69,7 @@ export default function Home() {
           </div>
 
           <div className="text-center">
-            <Link to="/lowongan">
+            <Link to="/jobs">
               <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-200">
                 View All Jobs
                 <ArrowRight className="ml-2 h-5 w-5" />
@@ -101,7 +101,7 @@ export default function Home() {
           </div>
 
           <div className="text-center mt-12">
-            <Link to="/perusahaan">
+            <Link to="/companies">
               <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-200">
                 View All Companies
                 <ArrowRight className="ml-2 h-5 w-5" />

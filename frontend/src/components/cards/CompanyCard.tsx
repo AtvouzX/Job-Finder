@@ -77,7 +77,7 @@ export function CompanyCard({ company }: CompanyCardProps) {
         </div>
 
         <div className="pt-2">
-          <Link to={`/perusahaan/${company.id}`}>
+          <Link to={`/companies/${company.id}`}>
             <Button className="w-full" size="sm">
               View Company
             </Button>

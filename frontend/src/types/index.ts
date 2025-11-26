@@ -23,7 +23,7 @@ export interface Job {
   employment_type?: string
   short_description?: string
   description?: string
-  benefits?: any[]
+  benefits?: unknown[]
   tags?: string[]
   posted_at?: string
   expires_at?: string

@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom'
 import { useSavedContext } from '@/contexts/SavedContext'
 import { useJob } from '@/hooks/useQueries'
+import type { Job } from '@/types'
 import { Button } from '@/components/ui/button'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -12,6 +13,19 @@ export default function JobDetail() {
   const { id } = useParams<{ id: string }>()
   const { isSaved, toggleSaved } = useSavedContext()
   const { data: job, isLoading, error } = useJob(id!)
+
+  const getCompanyLogo = (job: Job) => {
+    if (job?.companies?.website) {
+      try {
+        const domain = new URL(job.companies.website).hostname
+        const apiKey = import.meta.env.VITE_LOGO_DEV_API_KEY
+        return `https://img.logo.dev/${domain}?token=${apiKey}`
+      } catch {
+        return 'https://via.placeholder.com/64x64?text=No+Logo'
+      }
+    }
+    return 'https://via.placeholder.com/64x64?text=No+Logo'
+  }
 
   if (isLoading) {
     return (
@@ -61,16 +75,31 @@ export default function JobDetail() {
     <main className="max-w-4xl mx-auto p-4">
       <Card>
         <CardHeader>
+          <div className="flex gap-2">
+              <Button asChild variant="ghost" size="sm">
+                <Link to="/jobs">
+                  <ArrowLeft className="h-4 w-4 mr-2" />
+                  Back
+                </Link>
+              </Button>
+            </div>
           <div className="flex justify-between items-start">
-            <div>
-              <CardTitle className="text-2xl">{job.title}</CardTitle>
-              <CardDescription className="flex items-center gap-2 mt-2">
-                <span>{job.companies?.name}</span>
-                <Badge variant="secondary" className="flex items-center gap-1">
-                  <MapPin className="h-3 w-3" />
-                  {job.location}
-                </Badge>
-              </CardDescription>
+            <div className="flex items-center gap-3">
+              <img
+                src={getCompanyLogo(job)}
+                alt={`${job.companies?.name} logo`}
+                className="w-20 h-20 rounded-lg object-cover"
+              />
+              <div>
+                <CardTitle className="text-2xl">{job.title}</CardTitle>
+                <CardDescription className="flex items-center gap-2 mt-2">
+                  <span>{job.companies?.name}</span>
+                  <Badge variant="secondary" className="flex items-center gap-1">
+                    <MapPin className="h-3 w-3" />
+                    {job.location}{job.is_remote ? ' (Remote)' : ''}
+                  </Badge>
+                </CardDescription>
+              </div>
             </div>
             <div className="flex gap-2">
               <Button
@@ -80,12 +109,6 @@ export default function JobDetail() {
               >
                 <Bookmark className={`h-4 w-4 mr-2 ${isSaved(job.id) ? 'fill-current' : ''}`} />
                 {isSaved(job.id) ? 'Saved' : 'Save'}
-              </Button>
-              <Button asChild variant="ghost" size="sm">
-                <Link to="/lowongan">
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Back
-                </Link>
               </Button>
             </div>
           </div>

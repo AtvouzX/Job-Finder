@@ -1,13 +1,14 @@
 import { useParams, Link } from 'react-router-dom'
 import { useCompany, useJobsByCompany } from '@/hooks/useQueries'
-import { type Job } from '@/lib/api'
+import { type Job, type Company } from '@/lib/api'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
+import { JobCard } from '@/components/cards/JobCard'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Separator } from '@/components/ui/separator'
-import { MapPin, ArrowLeft, AlertCircle, Building } from 'lucide-react'
+import { MapPin, ArrowLeft, AlertCircle } from 'lucide-react'
 
 export default function CompanyDetail() {
   const { id } = useParams<{ id: string }>()
@@ -16,6 +17,19 @@ export default function CompanyDetail() {
 
   const isLoading = companyLoading || jobsLoading
   const error = companyError || jobsError
+
+  const getCompanyLogo = (company: Company | null) => {
+    if (company?.website) {
+      try {
+        const domain = new URL(company.website).hostname
+        const apiKey = import.meta.env.VITE_LOGO_DEV_API_KEY
+        return `https://img.logo.dev/${domain}?token=${apiKey}`
+      } catch {
+        return 'https://via.placeholder.com/64x64?text=No+Logo'
+      }
+    }
+    return 'https://via.placeholder.com/64x64?text=No+Logo'
+  }
 
   if (isLoading) {
     return (
@@ -65,25 +79,32 @@ export default function CompanyDetail() {
     <main className="max-w-6xl mx-auto p-4">
       <Card>
         <CardHeader>
-          <div className="flex justify-between items-start">
-            <div>
-              <CardTitle className="text-2xl flex items-center gap-2">
-                <Building className="h-6 w-6" />
-                {company.name}
-              </CardTitle>
-              <CardDescription className="flex items-center gap-2 mt-2">
-                <Badge variant="secondary" className="flex items-center gap-1">
-                  <MapPin className="h-3 w-3" />
-                  {company.location}
-                </Badge>
-              </CardDescription>
-            </div>
+          <div className="flex gap-2">
             <Button asChild variant="ghost" size="sm">
-              <Link to="/perusahaan">
+              <Link to="/jobs">
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Back
               </Link>
             </Button>
+          </div>
+          <div className="flex justify-between items-start">
+            <div className='flex items-center gap-3'>
+              <img
+                src={getCompanyLogo(company)}
+                alt={`${company.name} logo`}
+                className="w-20 h-20 rounded-lg object-cover"
+              />
+              <div>
+                <CardTitle className="text-2xl flex items-center gap-3">
+                  {company.name}
+                </CardTitle>
+                <CardDescription className="flex items-center gap-2 mt-2">
+                  <Badge variant="secondary" className="flex items-center gap-1">
+                    <MapPin className="h-3 w-3" />
+                    {company.location}
+                  </Badge>
+                </CardDescription></div>
+            </div>
           </div>
         </CardHeader>
         <CardContent>
@@ -95,26 +116,12 @@ export default function CompanyDetail() {
             <h2 className="text-lg font-semibold mb-4">Available Positions at {company.name}</h2>
             <div className="space-y-4">
               {jobs.map((job: Job) => (
-                <Card key={job.id} className="hover:shadow-md transition-shadow">
-                  <CardContent className="p-4">
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <h3 className="font-semibold text-lg">{job.title}</h3>
-                        <div className="flex items-center gap-2 mt-1">
-                          <Badge variant="outline" className="flex items-center gap-1">
-                            <MapPin className="h-3 w-3" />
-                            {job.location}
-                          </Badge>
-                        </div>
-                      </div>
-                      <Button asChild size="sm">
-                        <Link to={`/lowongan/${job.id}`}>
-                          View Details
-                        </Link>
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
+                <JobCard
+                  key={job.id}
+                  job={job}
+                  isSaved={false}
+                  onToggleSave={() => {}}
+                />
               ))}
             </div>
             {jobs.length === 0 && (

@@ -7,7 +7,7 @@ export function useSaved(initial: string[] = []) {
     try {
       const raw = localStorage.getItem(STORAGE_KEY)
       if (raw) return JSON.parse(raw) as string[]
-    } catch (e) {
+    } catch {
       // ignore
     }
     return initial
@@ -16,7 +16,7 @@ export function useSaved(initial: string[] = []) {
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(saved))
-    } catch (e) {
+    } catch {
       // ignore
     }
   }, [saved])

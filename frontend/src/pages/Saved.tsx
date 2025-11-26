@@ -42,7 +42,7 @@ export default function Saved() {
           <Heart className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
           <p className="text-lg text-muted-foreground">You haven't saved any jobs yet.</p>
           <p className="text-sm text-muted-foreground mt-2">Browse jobs and save the ones you're interested in.</p>
-          <Link to="/lowongan" className="mt-4 inline-block">
+          <Link to="/jobs" className="mt-4 inline-block">
             <Button>Browse Jobs</Button>
           </Link>
         </div>
