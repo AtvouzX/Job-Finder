@@ -1,12 +1,12 @@
 import { NavLink } from 'react-router-dom'
-import { Home, Briefcase, Building, Heart, User } from 'lucide-react'
+import { Home, Briefcase, Building, User, Bookmark } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const navItems = [
   { to: '/', label: 'Home', icon: Home },
   { to: '/lowongan', label: 'Jobs', icon: Briefcase },
   { to: '/perusahaan', label: 'Companies', icon: Building },
-  { to: '/saved', label: 'Saved', icon: Heart },
+  { to: '/saved', label: 'Saved', icon: Bookmark },
   { to: '/profile', label: 'Profile', icon: User },
 ]
 

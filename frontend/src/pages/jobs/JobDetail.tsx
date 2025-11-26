@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { api, type Job } from '@/lib/api'
 import { useSavedContext } from '@/contexts/SavedContext'
+import { useJob } from '@/hooks/useQueries'
 import { Button } from '@/components/ui/button'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -11,29 +10,10 @@ import { MapPin, Bookmark, ArrowLeft, AlertCircle } from 'lucide-react'
 
 export default function JobDetail() {
   const { id } = useParams<{ id: string }>()
-  const [job, setJob] = useState<Job | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
   const { isSaved, toggleSaved } = useSavedContext()
+  const { data: job, isLoading, error } = useJob(id!)
 
-  useEffect(() => {
-    const fetchJob = async () => {
-      if (!id) return
-
-      try {
-        const jobData = await api.getJob(id)
-        setJob(jobData)
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to load job')
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchJob()
-  }, [id])
-
-  if (loading) {
+  if (isLoading) {
     return (
       <main className="max-w-4xl mx-auto p-4">
         <Card>
@@ -51,13 +31,26 @@ export default function JobDetail() {
     )
   }
 
-  if (error || !job) {
+  if (error) {
     return (
       <main className="max-w-4xl mx-auto p-4">
         <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />
           <AlertDescription>
-            {error || 'Job not found.'}
+            {error.message || 'Failed to load job details.'}
+          </AlertDescription>
+        </Alert>
+      </main>
+    )
+  }
+
+  if (!job) {
+    return (
+      <main className="max-w-4xl mx-auto p-4">
+        <Alert variant="destructive">
+          <AlertCircle className="h-4 w-4" />
+          <AlertDescription>
+            Job not found.
           </AlertDescription>
         </Alert>
       </main>

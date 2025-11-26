@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { api, type Company, type Job } from '@/lib/api'
+import { useCompany, useJobsByCompany } from '@/hooks/useQueries'
+import { type Job } from '@/lib/api'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -11,33 +11,13 @@ import { MapPin, ArrowLeft, AlertCircle, Building } from 'lucide-react'
 
 export default function CompanyDetail() {
   const { id } = useParams<{ id: string }>()
-  const [company, setCompany] = useState<Company | null>(null)
-  const [jobs, setJobs] = useState<Job[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const { data: company, isLoading: companyLoading, error: companyError } = useCompany(id!)
+  const { data: jobs = [], isLoading: jobsLoading, error: jobsError } = useJobsByCompany(id!)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (!id) return
+  const isLoading = companyLoading || jobsLoading
+  const error = companyError || jobsError
 
-      try {
-        const [companyData, jobsData] = await Promise.all([
-          api.getCompany(id),
-          api.getJobsByCompany(id)
-        ])
-        setCompany(companyData)
-        setJobs(jobsData)
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to load data')
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchData()
-  }, [id])
-
-  if (loading) {
+  if (isLoading) {
     return (
       <main className="max-w-6xl mx-auto p-4">
         <Card>
@@ -55,13 +35,26 @@ export default function CompanyDetail() {
     )
   }
 
-  if (error || !company) {
+  if (error) {
     return (
       <main className="max-w-6xl mx-auto p-4">
         <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />
           <AlertDescription>
-            {error || 'Company not found.'}
+            {error.message || 'Failed to load company details.'}
+          </AlertDescription>
+        </Alert>
+      </main>
+    )
+  }
+
+  if (!company) {
+    return (
+      <main className="max-w-6xl mx-auto p-4">
+        <Alert variant="destructive">
+          <AlertCircle className="h-4 w-4" />
+          <AlertDescription>
+            Company not found.
           </AlertDescription>
         </Alert>
       </main>
@@ -101,7 +94,7 @@ export default function CompanyDetail() {
           <section>
             <h2 className="text-lg font-semibold mb-4">Available Positions at {company.name}</h2>
             <div className="space-y-4">
-              {jobs.map((job) => (
+              {jobs.map((job: Job) => (
                 <Card key={job.id} className="hover:shadow-md transition-shadow">
                   <CardContent className="p-4">
                     <div className="flex justify-between items-start">

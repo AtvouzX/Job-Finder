@@ -1,32 +1,25 @@
-import { useState, useEffect } from 'react'
-import { api, type Company } from '@/lib/api'
+import { useCompanies } from '@/hooks/useQueries'
 import { CompanyCard } from '@/components/cards'
+import { Skeleton } from '@/components/ui/skeleton'
+import { Alert, AlertDescription } from '@/components/ui/alert'
+import { AlertCircle } from 'lucide-react'
 
 export default function Companies() {
-  const [companies, setCompanies] = useState<Company[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const { data: companies = [], isLoading, error } = useCompanies()
 
-  useEffect(() => {
-    const fetchCompanies = async () => {
-      try {
-        const data = await api.getCompanies()
-        setCompanies(data)
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to load companies')
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchCompanies()
-  }, [])
-
-  if (loading) {
+  if (isLoading) {
     return (
       <main className="max-w-6xl mx-auto p-4">
         <h1 className="text-2xl font-bold mb-6">Perusahaan</h1>
-        <div className="text-center">Loading...</div>
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="space-y-3">
+              <Skeleton className="h-48 w-full rounded-lg" />
+              <Skeleton className="h-4 w-3/4" />
+              <Skeleton className="h-4 w-1/2" />
+            </div>
+          ))}
+        </div>
       </main>
     )
   }
@@ -35,7 +28,12 @@ export default function Companies() {
     return (
       <main className="max-w-6xl mx-auto p-4">
         <h1 className="text-2xl font-bold mb-6">Perusahaan</h1>
-        <div className="text-center text-red-500">{error}</div>
+        <Alert variant="destructive">
+          <AlertCircle className="h-4 w-4" />
+          <AlertDescription>
+            {error.message || 'Failed to load companies.'}
+          </AlertDescription>
+        </Alert>
       </main>
     )
   }
