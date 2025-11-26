@@ -6,7 +6,20 @@ class Company {
       .from('companies')
       .select('*');
     if (error) throw error;
-    return data;
+
+    // attach job_count for each company (use count head query)
+    const companiesWithCount = await Promise.all(
+      data.map(async (company) => {
+        const { count, error: countError } = await supabase
+          .from('jobs')
+          .select('id', { count: 'exact', head: true })
+          .eq('company_id', company.id);
+        if (countError) throw countError;
+        return { ...company, job_count: count || 0 };
+      })
+    );
+
+    return companiesWithCount;
   }
 
   static async findById(id) {
@@ -16,7 +29,15 @@ class Company {
       .eq('id', id)
       .single();
     if (error) throw error;
-    return data;
+
+    // get job count for this company
+    const { count, error: countError } = await supabase
+      .from('jobs')
+      .select('id', { count: 'exact', head: true })
+      .eq('company_id', id);
+    if (countError) throw countError;
+
+    return { ...data, job_count: count || 0 };
   }
 
   static async create(companyData) {
@@ -26,7 +47,8 @@ class Company {
       .select()
       .single();
     if (error) throw error;
-    return data;
+    // new company has no jobs yet
+    return { ...data, job_count: 0 };
   }
 
   static async update(id, updates) {

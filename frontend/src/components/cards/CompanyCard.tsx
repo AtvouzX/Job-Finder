@@ -6,9 +6,10 @@ import type { Company } from '@/types'
 
 interface CompanyCardProps {
   company: Company
+  jobsCount?: number
 }
 
-export function CompanyCard({ company }: CompanyCardProps) {
+export function CompanyCard({ company, jobsCount }: CompanyCardProps) {
   const getLogoSrc = (company: Company) => {
     if (company.website) {
       const domain = new URL(company.website).hostname
@@ -73,7 +74,13 @@ export function CompanyCard({ company }: CompanyCardProps) {
 
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <Briefcase className="h-4 w-4" />
-          <span>Jobs available</span>
+          <span>
+            {typeof jobsCount === 'number'
+              ? `${jobsCount} job${jobsCount === 1 ? '' : 's'}`
+              : typeof company.job_count === 'number'
+              ? `${company.job_count} job${company.job_count === 1 ? '' : 's'}`
+              : 'Jobs available'}
+          </span>
         </div>
 
         <div className="pt-2">

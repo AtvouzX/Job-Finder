@@ -10,9 +10,10 @@ interface JobCardProps {
   isSaved: boolean
   onToggleSave: (jobId: string) => void
   showFilledBookmark?: boolean
+  showLogo?: boolean
 }
 
-export function JobCard({ job, isSaved, onToggleSave, showFilledBookmark = false }: JobCardProps) {
+export function JobCard({ job, isSaved, onToggleSave, showFilledBookmark = false, showLogo = true }: JobCardProps) {
   const getCompanyLogo = (job: Job) => {
     if (job.companies?.website) {
       const domain = new URL(job.companies.website).hostname
@@ -34,11 +35,13 @@ export function JobCard({ job, isSaved, onToggleSave, showFilledBookmark = false
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
-            <img
-              src={getCompanyLogo(job)}
-              alt={`${job.companies?.name} logo`}
-              className="w-12 h-12 rounded-lg object-cover"
-            />
+            {showLogo && (
+              <img
+                src={getCompanyLogo(job)}
+                alt={`${job.companies?.name} logo`}
+                className="w-12 h-12 rounded-lg object-cover"
+              />
+            )}
             <div>
               <h2 className="font-semibold text-lg leading-tight">{job.title}</h2>
               <p className="text-sm text-muted-foreground">{job.companies?.name}</p>

@@ -5,7 +5,7 @@ import type { Job } from '@/types'
 import { useSavedContext } from '@/contexts/SavedContext'
 import { Button } from '@/components/ui/button'
 import { JobCard } from '@/components/cards'
-import { Heart } from 'lucide-react'
+import { Bookmark } from 'lucide-react'
 
 export default function Saved() {
   const { saved, toggleSaved } = useSavedContext()
@@ -39,7 +39,7 @@ export default function Saved() {
         <div className="text-center py-12 text-red-500">{error}</div>
       ) : list.length === 0 ? (
         <div className="text-center py-12">
-          <Heart className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+          <Bookmark className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
           <p className="text-lg text-muted-foreground">You haven't saved any jobs yet.</p>
           <p className="text-sm text-muted-foreground mt-2">Browse jobs and save the ones you're interested in.</p>
           <Link to="/jobs" className="mt-4 inline-block">

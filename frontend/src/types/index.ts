@@ -5,6 +5,7 @@ export interface Company {
   location?: string
   website?: string
   description?: string
+  job_count?: number
   rating?: number
   review_count?: number
   created_at?: string

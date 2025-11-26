@@ -7,6 +7,7 @@ export interface Company {
   description?: string;
   website?: string;
   location?: string;
+  job_count?: number;
   rating?: number;
   review_count?: number;
   created_at?: string;

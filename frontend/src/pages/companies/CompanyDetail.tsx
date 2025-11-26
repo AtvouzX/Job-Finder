@@ -115,14 +115,21 @@ export default function CompanyDetail() {
           <section>
             <h2 className="text-lg font-semibold mb-4">Available Positions at {company.name}</h2>
             <div className="space-y-4">
-              {jobs.map((job: Job) => (
-                <JobCard
-                  key={job.id}
-                  job={job}
-                  isSaved={false}
-                  onToggleSave={() => {}}
-                />
-              ))}
+              {jobs.map((job: Job) => {
+                const jobWithCompany: Job = job.companies && job.companies.website
+                  ? job
+                  : { ...job, companies: { name: company?.name || '', website: company?.website } }
+
+                return (
+                  <JobCard
+                    key={job.id}
+                    job={jobWithCompany}
+                    isSaved={false}
+                    onToggleSave={() => {}}
+                    showLogo={false}
+                  />
+                )
+              })}
             </div>
             {jobs.length === 0 && (
               <p className="text-muted-foreground text-center py-8">
