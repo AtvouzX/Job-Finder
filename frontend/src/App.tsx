@@ -5,6 +5,7 @@ import Footer from '@/components/layout/Footer'
 import BottomNavigation from '@/components/layout/BottomNavigation'
 import { SavedProvider } from '@/contexts/SavedContext'
 import { Skeleton } from '@/components/ui/skeleton'
+import PWABadge from './PWABadge'
 
 // Lazy load page components
 const Home = lazy(() => import('@/pages/Home'))
@@ -53,6 +54,7 @@ function App() {
       </div>
       <BottomNavigation />
       <Footer />
+      <PWABadge />
     </div>
   )
 }

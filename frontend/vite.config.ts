@@ -26,10 +26,11 @@ export default defineConfig({
       globPatterns: ['**/*.{js,css,html,svg,png,ico}'],
       cleanupOutdatedCaches: true,
       clientsClaim: true,
+      navigateFallback: 'index.html',
     },
 
     devOptions: {
-      enabled: false,
+      enabled: true,
       navigateFallback: 'index.html',
       suppressWarnings: true,
       type: 'module',
