@@ -49,3 +49,16 @@ export const useJobsByCompany = (companyId: string) => {
     enabled: !!companyId,
   })
 }
+
+// Top companies hook (sorted by rating)
+export const useTopCompanies = (limit: number = 15) => {
+  return useQuery<Company[]>({
+    queryKey: [...queryKeys.companies, 'top', limit],
+    queryFn: async () => {
+      const companies = await api.getCompanies()
+      return companies
+        .sort((a, b) => (b.rating || 0) - (a.rating || 0))
+        .slice(0, limit)
+    },
+  })
+}

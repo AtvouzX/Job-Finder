@@ -19,23 +19,25 @@ export function HomeCompanyCard({ company }: HomeCompanyCardProps) {
 
   return (
     <Link to={`/companies/${company.id}`}>
-      <Card className="hover:shadow-lg transition-shadow duration-200 cursor-pointer">
+      <Card className="hover:shadow-lg transition-shadow duration-200 cursor-pointer h-full">
         <CardHeader className="pb-3">
-          <div className="flex flex-col  items-center gap-4">
+          <div className="flex flex-col items-center gap-4 min-h-[120px]">
             <img
               src={getLogoSrc(company)}
               alt={`${company.name} logo`}
-              className="w-12 h-12 rounded-lg object-cover"
+              className="w-12 h-12 rounded-lg object-cover flex-shrink-0"
             />
-            <div className="flex-1">
-              <h3 className="font-semibold text-lg leading-tight">{company.name}</h3>
+            <div className="flex-1 text-center">
+              <h3 className="font-semibold text-lg leading-tight line-clamp-2 min-h-[3.5rem] flex items-center justify-center">
+                {company.name}
+              </h3>
             </div>
           </div>
         </CardHeader>
-        <CardContent>
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+        <CardContent className="pt-0">
+          <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
             <Briefcase className="h-4 w-4" />
-            <span>Jobs available</span>
+            <span>{company.job_count || 0} jobs available</span>
           </div>
         </CardContent>
       </Card>

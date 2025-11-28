@@ -1,37 +1,18 @@
-import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { api, type Job, type Company } from '@/lib/api'
 import { Hero } from '@/components/Hero'
 import { JobCard } from '@/components/cards'
 import { HomeCompanyCard } from '@/components/cards'
 import { Button } from '@/components/ui/button'
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
 import { ArrowRight } from 'lucide-react'
+import { useJobs, useTopCompanies } from '@/hooks/useQueries'
 
 export default function Home() {
-  const [jobs, setJobs] = useState<Job[]>([])
-  const [companies, setCompanies] = useState<Company[]>([])
-  const [loading, setLoading] = useState(true)
+  const { data: jobs = [], isLoading: jobsLoading } = useJobs()
+  const { data: companies = [], isLoading: companiesLoading } = useTopCompanies(15)
+  const isLoading = jobsLoading || companiesLoading
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [jobsData, companiesData] = await Promise.all([
-          api.getJobs(),
-          api.getCompanies()
-        ])
-        setJobs(jobsData)
-        setCompanies(companiesData)
-      } catch (error) {
-        console.error('Failed to fetch data:', error)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchData()
-  }, [])
-
-  if (loading) {
+  if (isLoading) {
     return (
       <main>
         <Hero />
@@ -91,13 +72,26 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {companies.slice(0, 3).map((company) => (
-              <HomeCompanyCard
-                key={company.id}
-                company={company}
-              />
-            ))}
+          <div className="relative">
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              className="w-full"
+            >
+              <CarouselContent className="-ml-2 md:-ml-4">
+                {companies.map((company) => (
+                  <CarouselItem key={company.id} className="pl-2 md:pl-4 basis-1/2 md:basis-1/3 lg:basis-1/5 h-full">
+                    <div className="p-1 h-full">
+                      <HomeCompanyCard company={company} />
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="hidden md:flex" />
+              <CarouselNext className="hidden md:flex" />
+            </Carousel>
           </div>
 
           <div className="text-center mt-12">

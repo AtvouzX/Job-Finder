@@ -1,4 +1,4 @@
-import { useParams, Link } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useCompany, useJobsByCompany } from '@/hooks/useQueries'
 import { type Job, type Company } from '@/lib/api'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
@@ -15,6 +15,7 @@ export default function CompanyDetail() {
   const { id } = useParams<{ id: string }>()
   const { data: company, isLoading: companyLoading, error: companyError } = useCompany(id!)
   const { data: jobs = [], isLoading: jobsLoading, error: jobsError } = useJobsByCompany(id!)
+  const navigate = useNavigate()
 
   const isLoading = companyLoading || jobsLoading
   const error = companyError || jobsError
@@ -81,11 +82,9 @@ export default function CompanyDetail() {
       <Card>
         <CardHeader>
           <div className="flex gap-2">
-            <Button asChild variant="ghost" size="sm">
-              <Link to="/jobs">
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Back
-              </Link>
+            <Button variant="ghost" size="sm" onClick={() => navigate(-1)}>
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Back
             </Button>
           </div>
           <div className="flex justify-between items-start">

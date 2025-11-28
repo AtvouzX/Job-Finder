@@ -1,4 +1,4 @@
-import { useParams, Link } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useSavedContext } from '@/contexts/SavedContext'
 import { useJob } from '@/hooks/useQueries'
 import type { Job } from '@/types'
@@ -14,6 +14,7 @@ export default function JobDetail() {
   const { id } = useParams<{ id: string }>()
   const { isSaved, toggleSaved } = useSavedContext()
   const { data: job, isLoading, error } = useJob(id!)
+  const navigate = useNavigate()
 
   const getCompanyLogo = (job: Job) => {
     if (job?.companies?.website) {
@@ -77,11 +78,9 @@ export default function JobDetail() {
       <Card>
         <CardHeader>
           <div className="flex gap-2">
-              <Button asChild variant="ghost" size="sm">
-                <Link to="/jobs">
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Back
-                </Link>
+              <Button variant="ghost" size="sm" onClick={() => navigate(-1)}>
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Back
               </Button>
             </div>
           <div className="flex justify-between items-start">
