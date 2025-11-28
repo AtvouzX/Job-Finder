@@ -3,7 +3,11 @@ const Company = require('../models/Company');
 const companyController = {
   async getAllCompanies(req, res) {
     try {
-      const companies = await Company.findAll();
+      const filters = {
+        q: req.query.q,
+        location: req.query.location,
+      }
+      const companies = await Company.findAll(filters);
       res.json(companies);
     } catch (error) {
       res.status(500).json({ error: error.message });

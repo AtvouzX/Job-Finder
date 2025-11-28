@@ -1,10 +1,25 @@
 const supabase = require('../config/supabase');
 
 class Company {
-  static async findAll() {
-    const { data, error } = await supabase
+  static async findAll(filters = {}) {
+    const { q, location } = filters
+
+    let query = supabase
       .from('companies')
-      .select('*');
+      .select('*')
+
+    // Apply filters
+    if (q) {
+      const like = `%${q}%`
+      query = query.ilike('name', like)
+    }
+
+    if (location) {
+      const likeLoc = `%${location}%`
+      query = query.ilike('location', likeLoc)
+    }
+
+    const { data, error } = await query
     if (error) throw error;
 
     // attach job_count for each company (use count head query)

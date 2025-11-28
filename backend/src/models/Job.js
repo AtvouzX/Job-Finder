@@ -2,7 +2,7 @@ const supabase = require('../config/supabase');
 
 class Job {
   static async findAll(filters = {}) {
-    const { q, location } = filters
+    const { q, location, is_remote, salary_min, salary_max } = filters
 
     let query = supabase
       .from('jobs')
@@ -21,6 +21,18 @@ class Job {
     if (location) {
       const likeLoc = `%${location}%`
       query = query.ilike('location', likeLoc)
+    }
+
+    if (is_remote !== undefined) {
+      query = query.eq('is_remote', is_remote)
+    }
+
+    if (salary_min !== undefined) {
+      query = query.gte('salary_min', salary_min)
+    }
+
+    if (salary_max !== undefined) {
+      query = query.lte('salary_max', salary_max)
     }
 
     const { data, error } = await query.order('posted_at', { ascending: false })

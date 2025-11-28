@@ -3,10 +3,13 @@ const Job = require('../models/Job');
 const jobController = {
   async getAllJobs(req, res) {
     try {
-      // Pass query params (e.g., q, location) through to model for filtering
+      // Pass query params through to model for filtering
       const filters = {
         q: req.query.q,
         location: req.query.location,
+        is_remote: req.query.is_remote === 'true' ? true : req.query.is_remote === 'false' ? false : undefined,
+        salary_min: req.query.salary_min ? parseInt(req.query.salary_min) : undefined,
+        salary_max: req.query.salary_max ? parseInt(req.query.salary_max) : undefined,
       }
       const jobs = await Job.findAll(filters);
       res.json(jobs);
