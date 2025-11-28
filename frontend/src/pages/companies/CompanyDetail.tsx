@@ -9,6 +9,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Separator } from '@/components/ui/separator'
 import { MapPin, ArrowLeft, AlertCircle } from 'lucide-react'
+import { ContactEmail } from '@/components/ContactEmail'
 
 export default function CompanyDetail() {
   const { id } = useParams<{ id: string }>()
@@ -109,6 +110,12 @@ export default function CompanyDetail() {
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground leading-relaxed mb-6">{company.description}</p>
+
+          {company.contact_email && (
+            <div className="mb-6">
+              <ContactEmail email={company.contact_email} />
+            </div>
+          )}
 
           <Separator className="my-6" />
 

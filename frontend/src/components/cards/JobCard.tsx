@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
-import { Bookmark, MapPin, Clock, DollarSign, Briefcase } from 'lucide-react'
+import { Bookmark, MapPin, Clock, Briefcase, Banknote } from 'lucide-react'
 import type { Job } from '@/lib/api'
 import { formatRelativeDate } from '@/lib/utils'
 
@@ -70,7 +70,7 @@ export function JobCard({ job, isSaved, onToggleSave, showFilledBookmark = false
         </div>
 
         <div className="flex items-center gap-2 text-sm font-medium">
-          <DollarSign className="h-4 w-4" />
+          <Banknote className="h-4 w-4" />
           <span>{formatSalary(job)}</span>
         </div>
 

@@ -8,6 +8,7 @@ export interface Company {
   job_count?: number
   rating?: number
   review_count?: number
+  contact_email?: string
   created_at?: string
 }
 
@@ -34,6 +35,7 @@ export interface Job {
   companies?: {
     name: string
     website?: string
+    contact_email?: string
   }
 }
 

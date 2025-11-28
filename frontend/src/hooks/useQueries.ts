@@ -27,10 +27,10 @@ export const useCompany = (id: string) => {
 }
 
 // Jobs hooks
-export const useJobs = () => {
+export const useJobs = (filters?: { q?: string; location?: string }) => {
   return useQuery<Job[]>({
-    queryKey: queryKeys.jobs,
-    queryFn: api.getJobs,
+    queryKey: [...queryKeys.jobs, filters ? { ...filters } : {}],
+    queryFn: () => api.getJobs(filters),
   })
 }
 

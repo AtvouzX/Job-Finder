@@ -4,10 +4,21 @@ import { JobCard } from '@/components/cards'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { AlertCircle } from 'lucide-react'
+import { useLocation } from 'react-router-dom'
+import { useMemo } from 'react'
 
 export default function Jobs() {
   const { isSaved, toggleSaved } = useSavedContext()
-  const { data: jobs = [], isLoading, error } = useJobs()
+  const location = useLocation()
+  const filters = useMemo(() => {
+    const params = new URLSearchParams(location.search)
+    const q = params.get('q') || undefined
+    const loc = params.get('location') || undefined
+    if (q || loc) return { q, location: loc }
+    return undefined
+  }, [location.search])
+
+  const { data: jobs = [], isLoading, error } = useJobs(filters)
 
   if (isLoading) {
     return (

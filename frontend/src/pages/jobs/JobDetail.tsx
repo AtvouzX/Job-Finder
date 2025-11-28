@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { MapPin, Bookmark, ArrowLeft, AlertCircle } from 'lucide-react'
+import { ContactEmail } from '@/components/ContactEmail'
 
 export default function JobDetail() {
   const { id } = useParams<{ id: string }>()
@@ -102,6 +103,9 @@ export default function JobDetail() {
               </div>
             </div>
             <div className="flex gap-2">
+          {job.companies?.contact_email && (
+                <ContactEmail email={job.companies.contact_email} />
+              )}
               <Button
                 onClick={() => toggleSaved(job.id)}
                 variant={isSaved(job.id) ? "default" : "outline"}

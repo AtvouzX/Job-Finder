@@ -10,6 +10,7 @@ export interface Company {
   job_count?: number;
   rating?: number;
   review_count?: number;
+  contact_email?: string;
   created_at?: string;
 }
 
@@ -36,6 +37,7 @@ export interface Job {
   companies?: {
     name: string;
     website?: string;
+    contact_email?: string;
   };
 }
 
@@ -56,12 +58,17 @@ export const api = {
     return response.json();
   },
 
-  async getJobs(): Promise<Job[]> {
-    const response = await fetch(`${API_BASE_URL}/jobs`);
+  async getJobs(filters?: { q?: string; location?: string }): Promise<Job[]> {
+    const params = new URLSearchParams()
+    if (filters?.q) params.set('q', filters.q)
+    if (filters?.location) params.set('location', filters.location)
+
+    const url = `${API_BASE_URL}/jobs${params.toString() ? `?${params.toString()}` : ''}`
+    const response = await fetch(url)
     if (!response.ok) {
-      throw new Error('Failed to fetch jobs');
+      throw new Error('Failed to fetch jobs')
     }
-    return response.json();
+    return response.json()
   },
 
   async getJob(id: string): Promise<Job> {
