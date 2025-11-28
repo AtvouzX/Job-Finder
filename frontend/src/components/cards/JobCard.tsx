@@ -31,7 +31,7 @@ export function JobCard({ job, isSaved, onToggleSave, showFilledBookmark = false
   }
 
   return (
-    <Card className="hover:shadow-lg transition-shadow duration-200">
+    <Card className="hover:shadow-lg transition-shadow duration-200 h-full flex flex-col">
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
@@ -63,41 +63,43 @@ export function JobCard({ job, isSaved, onToggleSave, showFilledBookmark = false
           </Button>
         </div>
       </CardHeader>
-      <CardContent className="space-y-3">
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <MapPin className="h-4 w-4" />
-          <span>{job.location}{job.is_remote && ' (Remote)'}</span>
-        </div>
-
-        <div className="flex items-center gap-2 text-sm font-medium">
-          <Banknote className="h-4 w-4" />
-          <span>{formatSalary(job)}</span>
-        </div>
-
-        <p className="text-sm text-muted-foreground line-clamp-2">
-          {job.description}
-        </p>
-
-        {job.benefits && job.benefits.length > 0 && (
-          <div className="flex flex-wrap gap-1">
-            {job.benefits.slice(0, 3).map((benefit, index) => (
-              <span
-                key={index}
-                className="inline-flex items-center gap-1 px-2 py-1 bg-secondary text-secondary-foreground text-xs rounded-full"
-              >
-                <Briefcase className="h-3 w-3" />
-                {benefit}
-              </span>
-            ))}
-            {job.benefits.length > 3 && (
-              <span className="text-xs text-muted-foreground">
-                +{job.benefits.length - 3} more
-              </span>
-            )}
+      <CardContent className="flex flex-col h-full">
+        <div className="flex-1 space-y-3">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <MapPin className="h-4 w-4" />
+            <span>{job.location}{job.is_remote && ' (Remote)'}</span>
           </div>
-        )}
 
-        <div className="flex items-center justify-between pt-2">
+          <div className="flex items-center gap-2 text-sm font-medium">
+            <Banknote className="h-4 w-4" />
+            <span>{formatSalary(job)}</span>
+          </div>
+
+          <p className="text-sm text-muted-foreground line-clamp-2">
+            {job.description}
+          </p>
+
+          {job.benefits && job.benefits.length > 0 && (
+            <div className="flex flex-wrap gap-1">
+              {job.benefits.slice(0, 3).map((benefit, index) => (
+                <span
+                  key={index}
+                  className="inline-flex items-center gap-1 px-2 py-1 bg-secondary text-secondary-foreground text-xs rounded-full"
+                >
+                  <Briefcase className="h-3 w-3" />
+                  {benefit}
+                </span>
+              ))}
+              {job.benefits.length > 3 && (
+                <span className="text-xs text-muted-foreground">
+                  +{job.benefits.length - 3} more
+                </span>
+              )}
+            </div>
+          )}
+        </div>
+
+        <div className="flex items-center justify-between pt-2 mt-auto">
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
             <Clock className="h-3 w-3" />
             <span>Posted {formatRelativeDate(job.posted_at)}</span>

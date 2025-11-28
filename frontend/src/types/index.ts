@@ -22,7 +22,6 @@ export interface Job {
   salary_min?: number
   salary_max?: number
   salary_currency?: string
-  employment_type?: string
   short_description?: string
   description?: string
   benefits?: unknown[]

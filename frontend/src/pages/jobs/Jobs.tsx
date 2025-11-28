@@ -1,6 +1,7 @@
 import { useJobs } from '@/hooks/useQueries'
 import { useSavedContext } from '@/contexts/SavedContext'
 import { JobCard } from '@/components/cards'
+import { JobFilters } from '@/components/JobFilters'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { AlertCircle } from 'lucide-react'
@@ -14,7 +15,13 @@ export default function Jobs() {
     const params = new URLSearchParams(location.search)
     const q = params.get('q') || undefined
     const loc = params.get('location') || undefined
-    if (q || loc) return { q, location: loc }
+    const is_remote = params.get('is_remote') === 'true' ? true : params.get('is_remote') === 'false' ? false : undefined
+    const salary_min = params.get('salary_min') ? parseInt(params.get('salary_min')!) : undefined
+    const salary_max = params.get('salary_max') ? parseInt(params.get('salary_max')!) : undefined
+
+    if (q || loc || is_remote !== undefined || salary_min || salary_max) {
+      return { q, location: loc, is_remote, salary_min, salary_max }
+    }
     return undefined
   }, [location.search])
 
@@ -54,6 +61,12 @@ export default function Jobs() {
   return (
     <main className="max-w-6xl mx-auto p-4">
       <h1 className="text-2xl font-bold mb-6">Jobs</h1>
+
+      {/* Search and Filters */}
+      <div className="mb-8">
+        <JobFilters />
+      </div>
+
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {jobs.map((job) => (
           <JobCard

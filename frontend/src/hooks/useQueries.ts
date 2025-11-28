@@ -11,10 +11,10 @@ export const queryKeys = {
 }
 
 // Companies hooks
-export const useCompanies = () => {
+export const useCompanies = (filters?: { q?: string; location?: string }) => {
   return useQuery<Company[]>({
-    queryKey: queryKeys.companies,
-    queryFn: api.getCompanies,
+    queryKey: [...queryKeys.companies, filters ? { ...filters } : {}],
+    queryFn: () => api.getCompanies(filters),
   })
 }
 
@@ -27,7 +27,7 @@ export const useCompany = (id: string) => {
 }
 
 // Jobs hooks
-export const useJobs = (filters?: { q?: string; location?: string }) => {
+export const useJobs = (filters?: { q?: string; location?: string; is_remote?: boolean; salary_min?: number; salary_max?: number }) => {
   return useQuery<Job[]>({
     queryKey: [...queryKeys.jobs, filters ? { ...filters } : {}],
     queryFn: () => api.getJobs(filters),

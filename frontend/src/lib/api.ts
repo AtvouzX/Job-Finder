@@ -24,7 +24,6 @@ export interface Job {
   salary_min?: number;
   salary_max?: number;
   salary_currency?: string;
-  employment_type?: string;
   short_description?: string;
   description?: string;
   benefits?: string[];
@@ -42,12 +41,17 @@ export interface Job {
 }
 
 export const api = {
-  async getCompanies(): Promise<Company[]> {
-    const response = await fetch(`${API_BASE_URL}/companies`);
+  async getCompanies(filters?: { q?: string; location?: string }): Promise<Company[]> {
+    const params = new URLSearchParams()
+    if (filters?.q) params.set('q', filters.q)
+    if (filters?.location) params.set('location', filters.location)
+
+    const url = `${API_BASE_URL}/companies${params.toString() ? `?${params.toString()}` : ''}`
+    const response = await fetch(url)
     if (!response.ok) {
-      throw new Error('Failed to fetch companies');
+      throw new Error('Failed to fetch companies')
     }
-    return response.json();
+    return response.json()
   },
 
   async getCompany(id: string): Promise<Company> {
@@ -58,10 +62,13 @@ export const api = {
     return response.json();
   },
 
-  async getJobs(filters?: { q?: string; location?: string }): Promise<Job[]> {
+  async getJobs(filters?: { q?: string; location?: string; is_remote?: boolean; salary_min?: number; salary_max?: number }): Promise<Job[]> {
     const params = new URLSearchParams()
     if (filters?.q) params.set('q', filters.q)
     if (filters?.location) params.set('location', filters.location)
+    if (filters?.is_remote !== undefined) params.set('is_remote', filters.is_remote.toString())
+    if (filters?.salary_min !== undefined) params.set('salary_min', filters.salary_min.toString())
+    if (filters?.salary_max !== undefined) params.set('salary_max', filters.salary_max.toString())
 
     const url = `${API_BASE_URL}/jobs${params.toString() ? `?${params.toString()}` : ''}`
     const response = await fetch(url)

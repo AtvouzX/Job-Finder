@@ -1,11 +1,23 @@
 import { useCompanies } from '@/hooks/useQueries'
 import { CompanyCard } from '@/components/cards'
+import { CompanyFilters } from '@/components/CompanyFilters'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { AlertCircle } from 'lucide-react'
+import { useLocation } from 'react-router-dom'
+import { useMemo } from 'react'
 
 export default function Companies() {
-  const { data: companies = [], isLoading, error } = useCompanies()
+  const location = useLocation()
+  const filters = useMemo(() => {
+    const params = new URLSearchParams(location.search)
+    const q = params.get('q') || undefined
+    const loc = params.get('location') || undefined
+    if (q || loc) return { q, location: loc }
+    return undefined
+  }, [location.search])
+
+  const { data: companies = [], isLoading, error } = useCompanies(filters)
 
   if (isLoading) {
     return (
@@ -41,6 +53,12 @@ export default function Companies() {
   return (
     <main className="max-w-6xl mx-auto p-4">
       <h1 className="text-2xl font-bold mb-6">Companies</h1>
+
+      {/* Search and Filters */}
+      <div className="mb-8">
+        <CompanyFilters />
+      </div>
+
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {companies.map((company) => (
           <CompanyCard key={company.id} company={company} />
