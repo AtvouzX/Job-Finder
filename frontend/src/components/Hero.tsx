@@ -51,7 +51,7 @@ export function Hero() {
                                 <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
                                 <Input
                                     type="text"
-                                    placeholder="Job title, keywords, or company"
+                                    placeholder="Job title or keywords"
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
                                     className="pl-12 pr-4 py-4 border-input file:text-foreground focus-visible:ring-ring bg-transparent placeholder:text-muted-foreground"

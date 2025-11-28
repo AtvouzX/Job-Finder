@@ -8,7 +8,7 @@ import {
 
 export default function Header() {
   return (
-    <header className="w-full bg-background shadow-sm border-b sticky top-0 z-50">
+    <header className="hidden md:block w-full bg-background shadow-sm border-b sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
         <Link to="/" className="font-bold text-lg">
           JobFinder

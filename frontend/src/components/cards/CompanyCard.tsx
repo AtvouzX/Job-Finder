@@ -78,7 +78,7 @@ export function CompanyCard({ company, jobsCount }: CompanyCardProps) {
             {typeof jobsCount === 'number'
               ? `${jobsCount} job${jobsCount === 1 ? '' : 's'}`
               : typeof company.job_count === 'number'
-              ? `${company.job_count} job${company.job_count === 1 ? '' : 's'}`
+              ? `${company.job_count} job${company.job_count === 1 ? ' available' : 's available'}`
               : 'Jobs available'}
           </span>
         </div>
