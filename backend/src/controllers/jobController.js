@@ -3,7 +3,12 @@ const Job = require('../models/Job');
 const jobController = {
   async getAllJobs(req, res) {
     try {
-      const jobs = await Job.findAll();
+      // Pass query params (e.g., q, location) through to model for filtering
+      const filters = {
+        q: req.query.q,
+        location: req.query.location,
+      }
+      const jobs = await Job.findAll(filters);
       res.json(jobs);
     } catch (error) {
       res.status(500).json({ error: error.message });
