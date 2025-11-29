@@ -38,6 +38,14 @@ export interface Job {
   }
 }
 
+export interface SavedJob {
+  id: string
+  job_id: string
+  created_at: string
+  updated_at: string
+  jobs?: Job
+}
+
 export interface UserProfile {
   id: string
   name: string

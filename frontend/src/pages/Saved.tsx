@@ -7,10 +7,12 @@ import { JobCard } from '@/components/cards'
 import { Bookmark } from 'lucide-react'
 
 export default function Saved() {
-  const { saved, toggleSaved } = useSavedContext()
-  const { data: jobs = [], isLoading, error } = useJobs()
+  const { saved, toggleSaved, isLoading: savedLoading } = useSavedContext()
+  const { data: jobs = [], isLoading: jobsLoading, error } = useJobs()
 
   const list: Job[] = (jobs || []).filter((j: Job) => saved.includes(j.id))
+
+  const isLoading = savedLoading || jobsLoading
 
   return (
     <main className="max-w-6xl mx-auto p-4">

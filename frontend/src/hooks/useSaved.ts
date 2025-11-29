@@ -1,39 +1,51 @@
-import { useEffect, useState } from 'react'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { api } from '@/lib/api'
 
-const STORAGE_KEY = 'job_finder:saved_jobs'
+export function useSaved() {
+  const queryClient = useQueryClient()
 
-export function useSaved(initial: string[] = []) {
-  const [saved, setSaved] = useState<string[]>(() => {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY)
-      if (raw) return JSON.parse(raw) as string[]
-    } catch {
-      // ignore
-    }
-    return initial
+  const { data: savedJobs = [], isLoading } = useQuery({
+    queryKey: ['savedJobs'],
+    queryFn: () => api.getSavedJobs(),
   })
 
-  useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(saved))
-    } catch {
-      // ignore
-    }
-  }, [saved])
+  const saved = savedJobs.map(sj => sj.job_id)
+
+  const createMutation = useMutation({
+    mutationFn: (jobId: string) => api.createSavedJob({ job_id: jobId }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['savedJobs'] })
+    },
+  })
+
+  const deleteMutation = useMutation({
+    mutationFn: (id: string) => api.deleteSavedJob(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['savedJobs'] })
+    },
+  })
 
   function isSaved(id: string) {
     return saved.includes(id)
   }
 
   function toggleSaved(id: string) {
-    setSaved((prev) => (prev.includes(id) ? prev.filter((p) => p !== id) : [...prev, id]))
+    if (isSaved(id)) {
+      const savedJob = savedJobs.find(sj => sj.job_id === id)
+      if (savedJob) {
+        deleteMutation.mutate(savedJob.id)
+      }
+    } else {
+      createMutation.mutate(id)
+    }
   }
 
   function clearSaved() {
-    setSaved([])
+    // Delete all saved jobs
+    savedJobs.forEach(sj => deleteMutation.mutate(sj.id))
   }
 
-  return { saved, isSaved, toggleSaved, clearSaved }
+  return { saved, isSaved, toggleSaved, clearSaved, isLoading }
 }
 
 export default useSaved

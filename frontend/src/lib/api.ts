@@ -1,3 +1,5 @@
+import type { SavedJob } from '@/types'
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api';
 
 export interface Company {
@@ -90,6 +92,74 @@ export const api = {
     const response = await fetch(`${API_BASE_URL}/jobs/company/${companyId}`);
     if (!response.ok) {
       throw new Error('Failed to fetch jobs by company');
+    }
+    return response.json();
+  },
+
+  async getSavedJobs(filters?: { job_id?: string }): Promise<SavedJob[]> {
+    const params = new URLSearchParams();
+    if (filters?.job_id) params.set('job_id', filters.job_id);
+
+    const url = `${API_BASE_URL}/saved${params.toString() ? `?${params.toString()}` : ''}`;
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error('Failed to fetch saved jobs');
+    }
+    return response.json();
+  },
+
+  async getSavedJob(id: string): Promise<SavedJob> {
+    const response = await fetch(`${API_BASE_URL}/saved/${id}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch saved job');
+    }
+    return response.json();
+  },
+
+  async createSavedJob(data: { job_id: string }): Promise<SavedJob> {
+    const response = await fetch(`${API_BASE_URL}/saved`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+      throw new Error('Failed to create saved job');
+    }
+    return response.json();
+  },
+
+  async updateSavedJob(id: string, data: {}): Promise<SavedJob> {
+    const response = await fetch(`${API_BASE_URL}/saved/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+      throw new Error('Failed to update saved job');
+    }
+    return response.json();
+  },
+
+  async deleteSavedJob(id: string): Promise<void> {
+    const response = await fetch(`${API_BASE_URL}/saved/${id}`, {
+      method: 'DELETE',
+    });
+    if (!response.ok) {
+      throw new Error('Failed to delete saved job');
+    }
+  },
+
+  async getSavedJobByJob(jobId: string): Promise<SavedJob | null> {
+    const response = await fetch(`${API_BASE_URL}/saved/job/${jobId}`);
+    if (response.status === 404) {
+      return null;
+    }
+    if (!response.ok) {
+      throw new Error('Failed to fetch saved job');
     }
     return response.json();
   },
