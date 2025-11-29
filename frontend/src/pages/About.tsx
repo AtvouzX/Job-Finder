@@ -1,8 +1,24 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import { Checkbox } from '@/components/ui/checkbox'
 import { Briefcase, Search, Building2, Zap, Bookmark, Proportions } from 'lucide-react'
+import { useState, useEffect } from 'react'
 
 export default function About() {
+  const [autoUpdate, setAutoUpdate] = useState(false)
+
+  useEffect(() => {
+    const saved = localStorage.getItem('job_finder:auto_update')
+    if (saved !== null) {
+      setAutoUpdate(JSON.parse(saved))
+    }
+  }, [])
+
+  const handleAutoUpdateChange = (checked: boolean) => {
+    setAutoUpdate(checked)
+    localStorage.setItem('job_finder:auto_update', JSON.stringify(checked))
+  }
+
   return (
     <main className="max-w-6xl mx-auto p-4 space-y-8">
       {/* Hero Section */}
@@ -178,6 +194,30 @@ export default function About() {
           </CardContent>
         </Card>
       </div>
+      {/* Settings Section */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-xl">App Settings</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              id="auto-update"
+              checked={autoUpdate}
+              onCheckedChange={handleAutoUpdateChange}
+            />
+            <label
+              htmlFor="auto-update"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              Enable automatic app updates
+            </label>
+          </div>
+          <p className="text-sm text-muted-foreground mt-2">
+            When enabled, the app will automatically update in the background without showing notifications.
+          </p>
+        </CardContent>
+      </Card>
     </main>
   )
 }
