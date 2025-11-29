@@ -1,8 +1,7 @@
 # JobFinder
 
-JobFinder is a small job search web application built with React + TypeScript on the frontend and a Node.js + Express backend. It uses Supabase as the database/backend-as-a-service for storing company and job data. The UI uses shadcn/ui and Tailwind CSS. It also supports PWA features via Vite PWA plugin.
+JobFinder is a job search web application built with React + TypeScript on the frontend and a Node.js + Express backend. It uses Supabase as the database/backend-as-a-service for storing company and job data. The UI uses shadcn/ui and Tailwind CSS. It also supports PWA features via Vite PWA plugin.
 
-This README is meant to help you run the project locally, learn about the tech stack, and understand the API endpoints the backend provides.
 
 ## Table of Contents
 - About
@@ -35,7 +34,7 @@ JobFinder provides a minimal but practical set of features to browse job listing
 - Responsive UI (desktop and mobile) using Tailwind CSS and shadcn components
 
 ## Tech Stack
-- Frontend: React 18, TypeScript, Vite, Tailwind CSS, shadcn ui, React Query, React Router
+- Frontend: React, TypeScript, Vite, Tailwind CSS, shadcn ui, React Query, React Router
 - Backend: Node.js, Express, Supabase (Postgres)
 - Other: Lucide icons, Vite PWA plugin
 
@@ -167,6 +166,3 @@ Contributions are welcome. Feel free to open issues or PRs for bug fixes, improv
 - If the frontend cannot reach the backend, check `VITE_API_BASE_URL` and that the backend is running.
 - If builds fail, ensure Node and pnpm are up-to-date and run `pnpm i` again.
 
----
-
-If you want a more detailed README (including architecture diagrams, a more explicit backend schema, or CI/CD instructions), tell me what format and I’ll expand it.
