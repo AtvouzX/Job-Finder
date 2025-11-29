@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import { Home, Briefcase, Building, User, Bookmark } from 'lucide-react'
+import { Home, Briefcase, Building, Info, Bookmark } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const navItems = [
@@ -7,7 +7,7 @@ const navItems = [
   { to: '/jobs', label: 'Jobs', icon: Briefcase },
   { to: '/companies', label: 'Companies', icon: Building },
   { to: '/saved', label: 'Saved', icon: Bookmark },
-  { to: '/profile', label: 'Profile', icon: User },
+  { to: '/about', label: 'About', icon: Info },
 ]
 
 export default function BottomNavigation() {

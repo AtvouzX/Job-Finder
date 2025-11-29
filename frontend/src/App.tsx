@@ -14,7 +14,7 @@ const JobDetail = lazy(() => import('@/pages/jobs/JobDetail'))
 const Companies = lazy(() => import('@/pages/companies/Companies'))
 const CompanyDetail = lazy(() => import('@/pages/companies/CompanyDetail'))
 const Saved = lazy(() => import('@/pages/Saved'))
-const Profile = lazy(() => import('@/pages/Profile'))
+const About = lazy(() => import('@/pages/About'))
 const NotFound = lazy(() => import('@/pages/NotFound'))
 
 // Loading component for Suspense fallback
@@ -46,7 +46,7 @@ function App() {
             <Route path="/companies" element={<Companies />} />
             <Route path="/companies/:id" element={<CompanyDetail />} />
             <Route path="/saved" element={<Saved />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/about" element={<About />} />
             <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
