@@ -83,7 +83,7 @@ export default function JobDetail() {
                 Back
               </Button>
             </div>
-          <div className="flex justify-between items-start">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start">
             <div className="flex items-center gap-3">
               <img
                 src={getCompanyLogo(job)}
@@ -101,7 +101,7 @@ export default function JobDetail() {
                 </CardDescription>
               </div>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-2 mt-4 sm:mt-0">
           {job.companies?.contact_email && (
                 <ContactEmail email={job.companies.contact_email} />
               )}
