@@ -2,7 +2,7 @@ const supabase = require('../config/supabase');
 
 class Job {
   static async findAll(filters = {}) {
-    const { q, location, is_remote, salary_min, salary_max } = filters
+    const { q, location, is_remote, employment_type, salary_min, salary_max } = filters
 
     let query = supabase
       .from('jobs')
@@ -25,6 +25,10 @@ class Job {
 
     if (is_remote !== undefined) {
       query = query.eq('is_remote', is_remote)
+    }
+
+    if (employment_type) {
+      query = query.eq('employment_type', employment_type)
     }
 
     if (salary_min !== undefined) {

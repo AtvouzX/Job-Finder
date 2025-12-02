@@ -98,6 +98,14 @@ export default function JobDetail() {
                     <MapPin className="h-3 w-3" />
                     {job.location}{job.is_remote ? ' (Remote)' : ''}
                   </Badge>
+                  {job.employment_type && (
+                    <Badge variant="secondary">
+                      {job.employment_type === 'full_time' ? 'Full Time' :
+                       job.employment_type === 'internship' ? 'Internship' :
+                       job.employment_type === 'contract' ? 'Contract' :
+                       job.employment_type}
+                    </Badge>
+                  )}
                 </CardDescription>
               </div>
             </div>
@@ -121,6 +129,38 @@ export default function JobDetail() {
             <h2 className="font-semibold text-lg mb-3">Job Description</h2>
             <p className="text-muted-foreground leading-relaxed">{job.description}</p>
           </section>
+          {job.requirements && job.requirements.length > 0 && (
+            <section className="mt-6">
+              <h2 className="font-semibold text-lg mb-3">Requirements</h2>
+              <ul className="list-disc list-inside text-muted-foreground space-y-1">
+                {job.requirements.map((requirement, index) => (
+                  <li key={index}>{requirement}</li>
+                ))}
+              </ul>
+            </section>
+          )}
+          {job.benefits && job.benefits.length > 0 && (
+            <section className="mt-6">
+              <h2 className="font-semibold text-lg mb-3">Benefits</h2>
+              <ul className="list-disc list-inside text-muted-foreground space-y-1">
+                {job.benefits.map((benefit, index) => (
+                  <li key={index}>{benefit}</li>
+                ))}
+              </ul>
+            </section>
+          )}
+          {job.tags && job.tags.length > 0 && (
+            <section className="mt-6">
+              <h2 className="font-semibold text-lg mb-3">Tags</h2>
+              <div className="flex flex-wrap gap-2">
+                {job.tags.map((tag, index) => (
+                  <Badge key={index} variant="outline">
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
+            </section>
+          )}
         </CardContent>
       </Card>
     </main>

@@ -27,7 +27,7 @@ export const useCompany = (id: string) => {
 }
 
 // Jobs hooks
-export const useJobs = (filters?: { q?: string; location?: string; is_remote?: boolean; salary_min?: number; salary_max?: number }) => {
+export const useJobs = (filters?: { q?: string; location?: string; is_remote?: boolean; employment_type?: string; salary_min?: number; salary_max?: number }) => {
   return useQuery<Job[]>({
     queryKey: [...queryKeys.jobs, filters ? { ...filters } : {}],
     queryFn: () => api.getJobs(filters),

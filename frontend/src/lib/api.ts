@@ -28,6 +28,8 @@ export interface Job {
   salary_currency?: string;
   short_description?: string;
   description?: string;
+  requirements?: string[];
+  employment_type?: string;
   benefits?: string[];
   tags?: string[];
   posted_at?: string;
@@ -64,11 +66,12 @@ export const api = {
     return response.json();
   },
 
-  async getJobs(filters?: { q?: string; location?: string; is_remote?: boolean; salary_min?: number; salary_max?: number }): Promise<Job[]> {
+  async getJobs(filters?: { q?: string; location?: string; is_remote?: boolean; employment_type?: string; salary_min?: number; salary_max?: number }): Promise<Job[]> {
     const params = new URLSearchParams()
     if (filters?.q) params.set('q', filters.q)
     if (filters?.location) params.set('location', filters.location)
     if (filters?.is_remote !== undefined) params.set('is_remote', filters.is_remote.toString())
+    if (filters?.employment_type) params.set('employment_type', filters.employment_type)
     if (filters?.salary_min !== undefined) params.set('salary_min', filters.salary_min.toString())
     if (filters?.salary_max !== undefined) params.set('salary_max', filters.salary_max.toString())
 

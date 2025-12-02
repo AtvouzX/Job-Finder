@@ -16,11 +16,12 @@ export default function Jobs() {
     const q = params.get('q') || undefined
     const loc = params.get('location') || undefined
     const is_remote = params.get('is_remote') === 'true' ? true : params.get('is_remote') === 'false' ? false : undefined
+    const employment_type = params.get('employment_type') || undefined
     const salary_min = params.get('salary_min') ? parseInt(params.get('salary_min')!) : undefined
     const salary_max = params.get('salary_max') ? parseInt(params.get('salary_max')!) : undefined
 
-    if (q || loc || is_remote !== undefined || salary_min || salary_max) {
-      return { q, location: loc, is_remote, salary_min, salary_max }
+    if (q || loc || is_remote !== undefined || employment_type || salary_min || salary_max) {
+      return { q, location: loc, is_remote, employment_type, salary_min, salary_max }
     }
     return undefined
   }, [location.search])

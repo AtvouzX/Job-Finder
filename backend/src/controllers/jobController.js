@@ -8,6 +8,7 @@ const jobController = {
         q: req.query.q,
         location: req.query.location,
         is_remote: req.query.is_remote === 'true' ? true : req.query.is_remote === 'false' ? false : undefined,
+        employment_type: req.query.employment_type,
         salary_min: req.query.salary_min ? parseInt(req.query.salary_min) : undefined,
         salary_max: req.query.salary_max ? parseInt(req.query.salary_max) : undefined,
       }

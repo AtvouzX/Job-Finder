@@ -21,6 +21,7 @@ export function JobFilters({ className }: JobFiltersProps) {
     q: searchParams.get('q') || '',
     location: searchParams.get('location') || '',
     is_remote: searchParams.get('is_remote') || 'any',
+    employment_type: searchParams.get('employment_type') || 'any',
     salary_min: searchParams.get('salary_min') || '',
     salary_max: searchParams.get('salary_max') || '',
   })
@@ -32,6 +33,7 @@ export function JobFilters({ className }: JobFiltersProps) {
       q: searchParams.get('q') || '',
       location: searchParams.get('location') || '',
       is_remote: searchParams.get('is_remote') || 'any',
+      employment_type: searchParams.get('employment_type') || 'any',
       salary_min: searchParams.get('salary_min') || '',
       salary_max: searchParams.get('salary_max') || '',
     })
@@ -59,6 +61,7 @@ export function JobFilters({ className }: JobFiltersProps) {
       q: '',
       location: '',
       is_remote: 'any',
+      employment_type: 'any',
       salary_min: '',
       salary_max: '',
     })
@@ -139,7 +142,23 @@ export function JobFilters({ className }: JobFiltersProps) {
                     </SelectContent>
                   </Select>
                 </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Employment Type</label>
+                  <Select value={filters.employment_type} onValueChange={(value) => handleFilterChange('employment_type', value)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Any" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="any">Any</SelectItem>
+                      <SelectItem value="full_time">Full Time</SelectItem>
+                      <SelectItem value="internship">Internship</SelectItem>
+                      <SelectItem value="contract">Contract</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
+              
 
               {/* Salary Range */}
               <div className="space-y-2">
