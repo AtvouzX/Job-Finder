@@ -85,18 +85,18 @@ export function Hero() {
                 <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                     <div className="bg-card backdrop-blur-sm rounded-xl p-6 border border-secondary/30">
                         <Briefcase className="h-8 w-8 mx-auto mb-3 text-card-foreground" />
-                        <div className="text-3xl font-bold mb-1 text-primary">500+</div>
+                        <div className="text-3xl font-bold mb-1 text-primary">19M+</div>
                         <div className="text-card-foreground">Active Jobs</div>
                     </div>
                     <div className="bg-card backdrop-blur-sm rounded-xl p-6 border border-secondary/30">
                         <Building2 className="h-8 w-8 mx-auto mb-3 text-card-foreground" />
-                        <div className="text-3xl font-bold mb-1 text-primary">50+</div>
+                        <div className="text-3xl font-bold mb-1 text-primary">500+</div>
                         <div className="text-card-foreground">Top Companies</div>
                     </div>
 
                     <div className="bg-card backdrop-blur-sm rounded-xl p-6 border border-secondary/30">
                         <Binoculars className="h-8 w-8 mx-auto mb-3 text-card-foreground" />
-                        <div className="text-3xl font-bold mb-1 text-primary">10K+</div>
+                        <div className="text-3xl font-bold mb-1 text-primary">7M+</div>
                         <div className="text-card-foreground">Job Seekers</div>
                     </div>
                 </div>
