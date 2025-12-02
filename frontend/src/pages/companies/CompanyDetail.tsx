@@ -87,7 +87,7 @@ export default function CompanyDetail() {
               Back
             </Button>
           </div>
-          <div className="flex justify-between items-start">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start">
             <div className='flex items-center gap-3'>
               <img
                 src={getCompanyLogo(company)}
@@ -105,16 +105,15 @@ export default function CompanyDetail() {
                   </Badge>
                 </CardDescription></div>
             </div>
+            <div className="flex gap-2 mt-4 sm:mt-0">
+              {company.contact_email && (
+                <ContactEmail email={company.contact_email} />
+              )}
+            </div>
           </div>
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground leading-relaxed mb-6">{company.description}</p>
-
-          {company.contact_email && (
-            <div className="mb-6">
-              <ContactEmail email={company.contact_email} />
-            </div>
-          )}
 
           <Separator className="my-6" />
 

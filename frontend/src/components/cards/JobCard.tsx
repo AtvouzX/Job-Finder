@@ -75,8 +75,20 @@ export function JobCard({ job, isSaved, onToggleSave, showFilledBookmark = false
             <span>{formatSalary(job)}</span>
           </div>
 
+          {job.employment_type && (
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Briefcase className="h-4 w-4" />
+              <span>
+                {job.employment_type === 'full_time' ? 'Full Time' :
+                 job.employment_type === 'internship' ? 'Internship' :
+                 job.employment_type === 'contract' ? 'Contract' :
+                 job.employment_type}
+              </span>
+            </div>
+          )}
+
           <p className="text-sm text-muted-foreground line-clamp-2">
-            {job.description}
+            {job.short_description || job.description}
           </p>
 
           {job.benefits && job.benefits.length > 0 && (
