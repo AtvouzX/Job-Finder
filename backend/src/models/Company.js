@@ -55,6 +55,27 @@ class Company {
     return { ...data, job_count: count || 0 };
   }
 
+  static async findBySlug(slug) {
+    const { data, error } = await supabase
+      .from('companies')
+      .select('*')
+      .eq('slug', slug)
+      .single();
+    if (error) {
+      if (error.code === 'PGRST116') return null; // Not found
+      throw error;
+    }
+
+    // get job count for this company
+    const { count, error: countError } = await supabase
+      .from('jobs')
+      .select('id', { count: 'exact', head: true })
+      .eq('company_id', data.id);
+    if (countError) throw countError;
+
+    return { ...data, job_count: count || 0 };
+  }
+
   static async create(companyData) {
     const { data, error } = await supabase
       .from('companies')

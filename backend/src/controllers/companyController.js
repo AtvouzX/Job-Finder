@@ -17,7 +17,14 @@ const companyController = {
   async getCompanyById(req, res) {
     try {
       const { id } = req.params;
-      const company = await Company.findById(id);
+      // Try to find by slug first, then by ID
+      let company = await Company.findBySlug(id);
+      if (!company) {
+        company = await Company.findById(id);
+      }
+      if (!company) {
+        return res.status(404).json({ error: 'Company not found' });
+      }
       res.json(company);
     } catch (error) {
       res.status(500).json({ error: error.message });
