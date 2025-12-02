@@ -84,7 +84,7 @@ export function CompanyCard({ company, jobsCount }: CompanyCardProps) {
         </div>
 
         <div className="pt-2">
-          <Link to={`/companies/${company.id}`}>
+          <Link to={`/companies/${company.slug || company.id}`}>
             <Button className="w-full" size="sm">
               View Company
             </Button>

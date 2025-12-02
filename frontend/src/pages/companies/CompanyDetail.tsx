@@ -14,7 +14,7 @@ import { ContactEmail } from '@/components/ContactEmail'
 export default function CompanyDetail() {
   const { id } = useParams<{ id: string }>()
   const { data: company, isLoading: companyLoading, error: companyError } = useCompany(id!)
-  const { data: jobs = [], isLoading: jobsLoading, error: jobsError } = useJobsByCompany(id!)
+  const { data: jobs = [], isLoading: jobsLoading, error: jobsError } = useJobsByCompany(company?.id || '')
   const navigate = useNavigate()
 
   const isLoading = companyLoading || jobsLoading
